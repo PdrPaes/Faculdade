@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "xlocale": "c",
+        "locale": "c",
+        "xlocmes": "c",
+        "xlocmon": "c",
+        "xlocnum": "c",
+        "xloctime": "c"
+    }
+}

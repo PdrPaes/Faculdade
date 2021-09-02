@@ -35,7 +35,6 @@ void inserir(node *fila, int id){
             }
             aux->prox = novo;
         }
-
     }
 }
 
@@ -89,6 +88,9 @@ int main(){
     imprimir(fila);
 
     node *removido;
+
+    /*primeiroNormal = removerNormal(&filaNormal);
+    printf("\nChamada Fila Normal: %d\n", primeiroNormal->idNormal);*/
 
     removido = remover(&fila);
     printf("Elemento removido: %d\n", removido->id);
