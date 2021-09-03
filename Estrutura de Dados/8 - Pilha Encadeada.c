@@ -63,3 +63,4 @@ void imprimir(node pilha){
         printf("\n");
     }
 }
+
