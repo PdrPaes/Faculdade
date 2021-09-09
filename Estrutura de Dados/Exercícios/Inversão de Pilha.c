@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
+#include <locale.h>
 //-------------------Pilha Original
 typedef struct item{
     int id;
     struct item *prox;
+
 }node;
 
 void criaPilha(node *pilha){
@@ -12,14 +14,17 @@ void criaPilha(node *pilha){
 }
 
 int vazia(node pilha){
+
     if(pilha.prox == NULL){
-        return 1;
+        
+        return 1;    
     }else{
         return 0;
     }
 }
 
 void push(node *pilha, int id){
+    int contador = 0;
     node *novo = (node*) malloc(sizeof(node));
 
     if(novo==NULL){
@@ -52,6 +57,7 @@ node* pop(node *pilha){
         penultimo->prox = NULL;
         return ultimo;
     }
+
 }
 
 void imprimir(node pilha){
@@ -120,35 +126,6 @@ void pushAuxiliar(nodeAuxiliar *pilhaAuxiliar, int idAuxiliar){
     }
 }
 
-nodeAuxiliar* pop(nodeAuxiliar *pilhaAuxiliar){
-    if(vaziaAuxiliar(*pilhaAuxiliar)==1){
-        printf("A pilha esta vazia!");
-    }else{
-        nodeAuxiliar *ultimoAuxiliar = pilhaAuxiliar->proxAuxiliar;
-        nodeAuxiliar *penultimoAuxiliar = pilhaAuxiliar;
-        while(ultimoAuxiliar->proxAuxiliar != NULL){
-            penultimoAuxiliar = ultimoAuxiliar;
-            ultimoAuxiliar = ultimoAuxiliar->proxAuxiliar;
-        }
-        penultimoAuxiliar->proxAuxiliar = NULL;
-        return ultimoAuxiliar;
-    }
-}
-
-void imprimirAuxiliar(nodeAuxiliar pilhaAuxiliar){
-    if(vaziaAuxiliar(pilhaAuxiliar)==1){
-        printf("A pilha esta vazia");
-    }else{
-        nodeAuxiliar *auxAuxiliar = pilhaAuxiliar.proxAuxiliar;
-        printf("Elementos da Pilha:\n");
-        while(auxAuxiliar != NULL){
-            printf("%d\n", auxAuxiliar->idAuxiliar);
-            auxAuxiliar = auxAuxiliar->proxAuxiliar;
-        }
-        printf("\n");
-    }
-}
-
 void zerarAuxiliar(nodeAuxiliar *pilhaAuxiliar){
     if(vaziaAuxiliar(*pilhaAuxiliar)==0){
         nodeAuxiliar *proxAuxiliar, *atualAuxiliar;
@@ -162,34 +139,123 @@ void zerarAuxiliar(nodeAuxiliar *pilhaAuxiliar){
         criaPilhaAuxiliar(pilhaAuxiliar);
     }
 }
-//-------------------Função Inverter
-void inverterPilhas(){
-    for (i = 0; i < tamanho; i++){
-        pushAuxiliar(&pilhaAuxiliar, pop(&pilha));
+//-------------------Função Tamanho
+int tamanho(node pilha){
+    int contador = 0;
+    if(vazia(pilha)== 1) {
+        printf("A pilha esta vazia");
+    }else {
+        node *aux = pilha.prox;
+        while( aux != NULL) {
+            contador++;
+            aux = aux->prox;
+        }
+        return contador;
     }
 }
 
-int main()
-{
-    node pilha;
+//-------------------Função Inverter
+node inverter(node *pilha){
+    int i = tamanho(*pilha);
 
+    node pilhaAuxiliar;
+    criaPilhaAuxiliar(&pilhaAuxiliar);
+
+    int j = i;
+    do{
+        node *retirado = pop(pilha);
+        pushAuxiliar(&pilhaAuxiliar, retirado->id);
+        j--;
+    } while(j > 0);
+
+    return pilhaAuxiliar;
+    zerarAuxiliar(&pilhaAuxiliar);
+}
+
+//-------------------Função Main
+int main(){
+    char dateStr[9];
+    char timeStr[9];
+    int menu;
+    setlocale(LC_ALL, "Portuguese");
+
+    node pilha;
     criaPilha(&pilha);
 
-    push(&pilha, 1);
-    push(&pilha, 2);
-    push(&pilha, 3);
-    push(&pilha, 4);
-    push(&pilha, 5);
+    node pilhaAuxiliar;
+    criaPilhaAuxiliar(&pilhaAuxiliar);
 
-    imprimir(pilha);
+    while (menu != 7){
+    system("COLOR 0A");
+    _strdate(dateStr);
+    _strtime(timeStr);
+    printf("\n--------------------------------------------------------------\n");
+    printf("Atividade sobre Pilha \n");
+    system("date /t");
+    printf("%s\n",timeStr);
+    printf("[1] - Inserir item.\n");
+    printf("[2] - Remover item.\n");
+    printf("[3] - Imprimir Pilha.\n");
+    printf("[4] - Inverter Pilha.\n");
+    printf("[5] - Imprimir quantidade de itens na Pilha.\n");
+    printf("[6] - Limpar Pilha.\n");
+    printf("[7] - Sair.");
+    printf("\n--------------------------------------------------------------\n");
+    printf("Opção desejada: ");
+    scanf("%d", &menu);
+    printf("\n--------------------------------------------------------------\n");
 
-    node *retirado = pop(&pilha);
+        switch(menu){
+            case 1: //Inserir item.
+                system("cls");
+                printf("\n————— Inserir item —————\n");
+                printf("\n—> Informe o item a ser inserido: ");
+                    int inserir = 0;
+                    scanf("%d",&inserir);
+                    push(&pilha, inserir);
+            break;
+            case 2: //Remover item.
+                system("cls");
+                printf("\n————— Remover item —————\n");
+                node *retirado = pop(&pilha);
+                printf("Elemento Removido ->%d\n", retirado->id);
+                    
+            break;
+            case 3: //Imprimir Pilha.
+                system("cls");
+                printf("\n————— Imprimir Pilha —————");
+                    imprimir(pilha);
 
-    printf("Elemento retirado: %d\n\n", retirado->id);
+            break;
+            case 4: // Inverter Pilha Inversa.
+                system("cls");
+                printf("\n————— Inverter Pilha —————");
+                    pilha = inverter(&pilha);
+                    imprimir(pilha);
 
-    zerar(&pilha);
+            break;
+            case 5: //Imprimir quantidade de itens na Pilha.
+                system("cls");
+                printf("\n————— Imprimir quantidade de itens na Pilha —————");
+                    int tamanhoPilha = tamanho(pilha);
+                    printf("No momento %d itens estão na Pilha.",&tamanhoPilha);
 
-    imprimir(pilha);
+            break;
+            case 6: //Limpar Pilha
+                system("cls");
+                printf("\n————— Limpar Pilha —————\n");
+                    zerar(&pilha);
+                    printf("\nPilha Limpa.\n");
 
-    return 0;
+            break;
+            case 7: //Sair
+                system("cls");
+                printf("\n————— Aplicação Finalizada —————\n");
+            default:
+                system("cls");
+                printf("————— Opção não existente no menu! —————");
+            break;
+        }
+    }
+return 0;
 }
