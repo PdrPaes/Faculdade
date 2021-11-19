@@ -141,7 +141,6 @@ void desenfileirar(normal filaNormal, prioridade filaPrioritaria){
         for( int i = 1; i <= total; i++){
             if(quantidadePrioridade(filaPrioritaria)!=0){
                 if (i%3==0){
-                //fila normal
                     if(quantidadeNormal(filaNormal)!=NULL){
                         primeiroNormal = removerNormal(&filaNormal);
                         printf("\nChamada Fila Normal: %d\n", primeiroNormal->idNormal);
@@ -150,7 +149,6 @@ void desenfileirar(normal filaNormal, prioridade filaPrioritaria){
                         printf("\nChamada Fila Prioritária: %d\n", primeiroPrioridade->idPrioridade);
                     }
                 } else {
-                //fila preferencial
                     primeiroPrioridade = removerPrioridade(&filaPrioritaria);
                     printf("\nChamada Fila Prioritária: %d\n", primeiroPrioridade->idPrioridade);
                 }
@@ -237,3 +235,27 @@ int main(){
     }
 return 0;
 }
+/*
+DecolagemPrioritaria *auxDecolagemPrioritaria = filaDecolagemPrioritaria.proximoDecolagemPrioritaria;
+    auxDecolagemPrioritaria = auxDecolagemPrioritaria->proximoDecolagemPrioritaria;
+    int primeiroDecolagemPrioritaria = auxDecolagemPrioritaria->idDecolagemPrioritaria;
+
+    Decolagem *auxDecolagem = filaDecolagem.proximoDecolagem;
+    auxDecolagem = auxDecolagem->proximoDecolagem;
+    int primeiroDecolagem = auxDecolagem->idDecolagem;
+
+    AterrissagemPrioritaria *auxAterrissagemPrioritaria = filaAterrissagemPrioritaria.proximoAterrissagemPrioritaria;
+    auxAterrissagemPrioritaria = auxAterrissagemPrioritaria->proximoAterrissagemPrioritaria;
+    int primeiroAterrissagemPrioritaria = auxAterrissagemPrioritaria->idAterrissagemPrioritaria;
+
+    Aterrissagem *auxAterrissagem = filaAterrissagem.proximoAterrissagem;
+    auxAterrissagem = auxAterrissagem->proximoAterrissagem;
+    int primeiroAterrissagem = auxAterrissagem->idAterrissagem;*/
+
+    printf("Fila de Decolagem: 6 – 16 – 56 – 88 – 44 – 46 - 28 - 32");
+    printf("\nFila de Aterrissagem: 23 – 55 – 27 - 89 - 77 - 15 - 5");
+    printf("\nPista 1 - *32(Decolando)");
+    printf("\nPista 2 - *5(Aterrissando)");
+    printf("\nPista 3 - 13(Aterrissando)");
+    printf("\nTotal de aviões atendidos: 22");
+    printf("\nTotal de emergências: 2");
